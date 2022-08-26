@@ -145,10 +145,31 @@ class Hepsiburada:
         time.sleep(3)
         response1 = requests.get('https://checkout.hepsiburada.com/api/agreement/DistantSales', cookies=self.cookies,
                                  headers=self.headers)
-        # response2 = requests.get('https://checkout.hepsiburada.com/api/agreement/PreliminaryInformation', cookies=self.cookies,
-        #                        headers=self.headers)
+        response2 = requests.get('https://checkout.hepsiburada.com/api/agreement/PreliminaryInformation', cookies=self.cookies,
+                               headers=self.headers)
         print('hi')
         # TODO MATCHLEME KISMI YAPILACAK------<<<<<<<<
+        # TODO MATCHLEME KISMI YAPILACAK------<<<<<<<<
+        # Eklenen 10 ürünün satıcılarının name bilgisine göre matchleme
+        js = json.loads(response2.text)["result"]
+        jk = js.split(" Ünvanı")
+        del jk[0]
+        del jk[0]
+        del jk[1]
+        del jk[2]
+        del jk[3]
+        del jk[4]
+        del jk[5]
+        del jk[6]
+        del jk[7]
+        del jk[8]
+        del jk[9]
+        # [i.split("<br/>") for i in jk]
+        list = []
+        for i in jk:
+            merc = i.split("<br/>")[0].replace(":", "").strip().capitalize()
+            list.append(merc)
+
         try:
             jss = json.loads(response1.text)["result"]
             mobile = [i.split("Telefon")[1].replace(":", "") for i in jss.split("Fax")[:1]][0]
