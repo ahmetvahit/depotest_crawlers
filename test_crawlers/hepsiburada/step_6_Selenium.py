@@ -149,7 +149,6 @@ class Hepsiburada:
                                headers=self.headers)
         print('hi')
         # TODO MATCHLEME KISMI YAPILACAK------<<<<<<<<
-        # TODO MATCHLEME KISMI YAPILACAK------<<<<<<<<
         # Eklenen 10 ürünün satıcılarının name bilgisine göre matchleme
         js = json.loads(response2.text)["result"]
         jk = js.split(" Ünvanı")
