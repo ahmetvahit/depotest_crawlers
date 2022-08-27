@@ -1,11 +1,12 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.firefox.options import Options
 import requests
 from webdriver_manager.chrome import ChromeDriverManager
 import time
 import json
+import collections
+
 
 class Hepsiburada:
     def __init__(self):
@@ -106,68 +107,96 @@ class Hepsiburada:
             },
         }
 
-    def inUrl(self):
+    def addbasket(self):  # Json da kayıtlı olan sku ve listingId leri API yoluyla sepete ekleme
 
         adds = open("data/step_5_Hepsiburada.json", encoding="utf-8").read()
         add = json.loads(adds)
-        for d in add:
-            sku = d["merchantId"]
-            listing_id = d["listingId"]
+        try:
+            for d in add:
+                sku = d["merchantId"]
+                listing_id = d["listingId"]
 
-            _js = self.json_data_basket
-            _js["product"]["metadata"]["sku"] = f"{sku}"
-            _js["product"]["metadata"]["listingId"] = f"{listing_id}"
+                _js = self.json_data_basket
+                _js["product"]["metadata"]["sku"] = f"{sku}"
+                _js["product"]["metadata"]["listingId"] = f"{listing_id}"
 
-            requests.put('https://checkout.hepsiburada.com/api/basket', headers=self.api_basket_headers, json=_js)
-        time.sleep(7)
+                requests.put('https://checkout.hepsiburada.com/api/basket', headers=self.api_basket_headers, json=_js)
+        except:
+            pass
+
+    def logIn(self):
 
         self.browser.maximize_window()
         basket = 'https://www.hepsiburada.com/uyelik/giris?ReturnUrl=https%3A%2F%2Fcheckout.hepsiburada.com%2Fsepetim'
+        # basket = "https://giris.hepsiburada.com/"
         self.browser.get(f"{basket}")
-        time.sleep(2)
+        time.sleep(3)
+        self.browser.execute_script("window.scrollBy(0,450)")
         self.browser.find_element(By.ID, 'btnGoogle').click()
-        time.sleep(3)
+        time.sleep(1)
         self.browser.find_element(By.ID, 'identifierId').send_keys("salihbey3426@gmail.com" + Keys.ENTER)
-        time.sleep(3)
-        self.browser.find_element(By.XPATH, "//input[@type='password']").send_keys("ahmetsalih1234" + Keys.ENTER)
-        time.sleep(10)
+        time.sleep(2)
+        try:
+            self.browser.find_element(By.XPATH, "//input[@type='password']").send_keys("ahmetsalih1234" + Keys.ENTER)
+        except:
+            pass
 
+    def order_status(self):
+        time.sleep(7.5)
+        # basket = "https://checkout.hepsiburada.com/sepetim"
+        # self.browser.get(f"{basket}")
         self.browser.find_element(By.ID, 'continue_step_btn').click()
-        time.sleep(5)
+        time.sleep(1.6)
         self.browser.find_element(By.ID, 'continue_step_btn').click()
-        time.sleep(5)
+        time.sleep(3.7)
         self.browser.find_element(By.XPATH, '//*[@id="payment-methods"]/div/div[2]/div[1]/div[1]/div').click()
-        time.sleep(7)
         self.browser.find_element(By.XPATH, '//*[@id="payment-money-transfer"]/div/div[1]/div[1]/div[2]/div').click()
-        time.sleep(3)
         self.browser.find_element(By.ID, 'continue_step_btn').click()
-        time.sleep(5)
-        time.sleep(3)
+
+    @staticmethod
+    def prepare_urls():
+        data = open("data/step_4_merchant_company_details_Hepsiburada.json", encoding="utf-8").read()
+        data = json.loads(data)
+        names = []
+        for row in data[:10]:
+            names.append(row['m_name'])
+
+        names = list(set(names))
+        return names
+
+    def contracts(self):
         response1 = requests.get('https://checkout.hepsiburada.com/api/agreement/DistantSales', cookies=self.cookies,
                                  headers=self.headers)
-        response2 = requests.get('https://checkout.hepsiburada.com/api/agreement/PreliminaryInformation', cookies=self.cookies,
-                               headers=self.headers)
-        print('hi')
+        response2 = requests.get('https://checkout.hepsiburada.com/api/agreement/PreliminaryInformation',
+                                 cookies=self.cookies,
+                                 headers=self.headers)
+
         # TODO MATCHLEME KISMI YAPILACAK------<<<<<<<<
         # Eklenen 10 ürünün satıcılarının name bilgisine göre matchleme
         js = json.loads(response2.text)["result"]
-        jk = js.split(" Ünvanı")
-        del jk[0]
-        del jk[0]
-        del jk[1]
-        del jk[2]
-        del jk[3]
-        del jk[4]
-        del jk[5]
-        del jk[6]
-        del jk[7]
-        del jk[8]
-        del jk[9]
-        # [i.split("<br/>") for i in jk]
-        list = []
-        for i in jk:
-            merc = i.split("<br/>")[0].replace(":", "").strip().capitalize()
-            list.append(merc)
+        titles = js.split(" Ünvanı")
+        del titles[0]
+
+        title = []
+        for i in titles:
+            merc = i.split("<br/>")[0].replace(":", "").strip().lower()
+            title.append(merc)
+
+        # Tekrar eden isim bilgilerini ayırma
+        title_2 = []
+        for t in title:
+            if t not in title_2:
+                title_2.append(t)
+
+        names = self.prepare_urls()
+        # MatchingName
+        merchant_items = []
+        for name in names:
+            if name in title_2:
+                merchant_items.append(name)
+
+        with open("data/matching_sellers.json", "w", encoding="utf-8") as f:
+            json.dump(merchant_items, f, ensure_ascii=False)
 
         try:
             jss = json.loads(response1.text)["result"]
@@ -175,23 +204,27 @@ class Hepsiburada:
             m_phone = mobile.strip().split("\n")[0]
         except:
             m_phone = None
-        # js = json.loads(response2.text)["result"]
+            # js = json.loads(response2.text)["result"]
 
-        self.output.append({
-            "merchant_slug": None,
-            "email": None,
-            "mersis_no": None,
-            "phone": m_phone,
-            "city": None,
-        })
-
-        with open("data/step_4_merchant_company_details_Hepsiburada.json", "r+", encoding="utf-8") as f:
-            json.dump(self.output, f, ensure_ascii=False)
+        # self.output.append({
+        #     "merchant_slug": None,
+        #     "email": None,
+        #     "mersis_no": None,
+        #     "phone": m_phone,
+        #     "city": None,
+        # })
+        #
+        # with open("data/step_4_merchant_company_details_Hepsiburada.json", "r+", encoding="utf-8") as f:
+        #     json.dump(self.output, f, ensure_ascii=False)
 
     def close(self):
         self.browser.close()
 
 
-stap = Hepsiburada()
-stap.inUrl()
-stap.close()
+hb = Hepsiburada()
+hb.addbasket()
+hb.logIn()
+hb.order_status()
+hb.contracts()
+# hb.retry()
+hb.close()
