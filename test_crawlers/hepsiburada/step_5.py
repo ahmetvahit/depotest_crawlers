@@ -138,62 +138,31 @@ class crawl(scrapy.Spider):
         },
     }
 
-    # cook = {
-    #     '_gcl_au': '1.1.591549031.1660413452',
-    #     'hbus_anonymousId': '1fc07a1a-6c79-499c-ab2a-28455d520a37',
-    #     '_tt_enable_cookie': '1',
-    #     '_ttp': 'aaec7b4f-e629-4ebc-bbe6-c43911581ebc',
-    #     '_hjSessionUser_216130': 'eyJpZCI6IjJmZTBhMDc5LWQ1MGMtNTc1Yi1iZmY0LWVlMmQ2Yjk0MmJhNyIsImNyZWF0ZWQiOjE2NjA0MTM0NjA2NDMsImV4aXN0aW5nIjp0cnVlfQ==',
-    #     'cookieconsentanon': 'true%7C15.08.2022%2009%3A28%3A18',
-    #     'cookieconsentauth': 'true',
-    #     'useinternal': 'true',
-    #     'SFSESSIONID': '0687182d-c35e-44c0-9f9d-b4bf96dfa75e',
-    #     '__zlcmid': '1BVl9pxlbghoWaj',
-    #     'searchHistory': '[%22porland%20dokulu%20alt%C4%B1n%20rip%22%2C%22porland%20l20233%20f%C4%B1a%20dokulu%22]',
-    #     'cto_bundle': 'wSk3wl9kSGo5UUtjWVZYOHlLbk1wUlNtanRMMkpzZG54TGxqbGRxVkpaTEZDZFFaTmJXckMwM2k0MWNuc2JsdiUyQm1za21xdkV6SWh4aHUlMkZEY1pmZmpIQkxJVSUyQmpDbVQ5QVZaWHFLR3U3MVR3cSUyQjRxbEliWWdpZFVKRTVad0dBaXhRTElaamE1dG5LcFljRk4xUENWZ2ZQRFZWZyUzRCUzRA',
-    #     '_ga': 'GA1.1.1374688111.1660413454',
-    #     'ab.storage.sessionId.a19ee87d-6625-49ed-ad8c-f427b0067dec': '%7B%22g%22%3A%22114e98a6-349f-2074-0f05-c255472b02f9%22%2C%22e%22%3A1661002034672%2C%22c%22%3A1661000234672%2C%22l%22%3A1661000234672%7D',
-    #     'ab.storage.deviceId.a19ee87d-6625-49ed-ad8c-f427b0067dec': '%7B%22g%22%3A%22109b04d0-6f15-4090-5850-b64f3d886e15%22%2C%22c%22%3A1660413456413%2C%22l%22%3A1661000234673%7D',
-    #     'ab.storage.userId.a19ee87d-6625-49ed-ad8c-f427b0067dec': '%7B%22g%22%3A%2276d54b71-a85e-4930-a40a-414facf07c3d%22%2C%22c%22%3A1660728660914%2C%22l%22%3A1661000234674%7D',
-    #     '_ga_44CSPTX731': 'GS1.1.1661000234.51.0.1661000235.59.0.0',
-    #     '_dgr_top_parent_category': '',
-    #     'anon': '8BAC4D0BD11AF41D99788D2A6242D6ADA0B459E7F6C68E2EF9D6014C5EF31350CD3C73CE4669956B0C206DE8F052BBF91FB4656F5E220DF9DFD6F7944A06D93110C4C6952392224E139967F33E5714777D8A2B7892EB6294EC9C23AAE2F90997077DAD9D9C610FDFB55AF9E4206F67659B2AB7181B88E20B54FC1971A5FB2DDF6473EEAB2566F00AD8B8DB8D46A80C21AAF4225D28F1352A8B95692662BE45B56DB4742C8160B454312834A0FB78BB7F327A3BC21F623EA2FCFCE516E17C3F776D9606634951CAD4EA6C1F2057A19EC516C5DDCD0B8AFD6ED11DD1F00D1DD3BFED09E6FEBB702911B61CF2F003891BB9D18C55CA6DFCC99BDC8424CA9AD9555888A8DE3E23E7DB897EF610580340924A6D864B6B1B0847C6BD211B2279AD6978158FE4ABF550C1A884D7FEB05A34EE7B96DAC7CF1FAA844975AD15C027619005026D7FE7BC67C3757F168E60',
-    #     'jwt': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYmYiOjE2NjEwMDA2NDgsImV4cCI6MTY2MTI1OTg0OCwiaWF0IjoxNjYxMDAwNjQ4LCJVc2VySWQiOiI3NmQ1NGI3MS1hODVlLTQ5MzAtYTQwYS00MTRmYWNmMDdjM2QiLCJUaXRsZSI6IkFobWV0IFRvcGFuIiwiRmlyc3ROYW1lIjoiQWhtZXQiLCJMYXN0TmFtZSI6IlRvcGFuIiwiRW1haWwiOiJ3dGNuOTk4QGdtYWlsLmNvbSIsIklzQXV0aGVudGljYXRlZCI6IlRydWUiLCJBcHBLZXkiOiJBRjdGMkEzNy1DQzRCLTRGMUMtODdGRC1GRjM2NDJGNjdFQ0IiLCJQcm92aWRlciI6IkhlcHNpYnVyYWRhIiwiU2hhcmVEYXRhUGVybWlzc2lvbiI6IlRydWUiLCJHZW5kZXIiOiIxIiwicCI6eyJ0IjpbXX19.EbsyRh0wA1t-UtJNjNen7OmQivTtg2kSNSkgwgZMG8k',
-    #     'eJwt': 'ttT1DojhgOUTOBUmIS%2BAJrQegpHCWh25Zea3HeCiHlY4v5POtvZIJo2VHixqnc1ry7FwZt%2FgknSgxQF9%2Bw5%2Flfx6qVMANccZBqEwB9cOpZhCx%2B0PMb4%2BVcQy2pK4drUXB6crUTL0LdDlb6qsPl%2BD0xMLIrkFtQL6rbDxqN%2F99aOxM91VtExTogox8t6zUvakqtUdrC8NmIDl3QWo7jnEzE1s8FerdiuvozLd%2F8jiIwC3Sr9NFCfrGiLIAmJHACqCjP220%2FGRvMuKtTyTQ3PBG%2Fi%2Fob6xwKvaHeLQMZUmIHldB03Gbgnx79j36EuT5P9AtjvJqL5Vh9YxS1p4IWvZJMrALsxS0%2Ftb9z6PB1vDmdoelbop9ZPZilWSCDH%2BJ1AE3Cumnrx4iMw%2FvJABcJmsQMJiBtwJo1D7RJBxrEabAyqHisqxfVt2%2Fdadh8NE1vrHP4%2FESVmhphn5mU9Ts1U4Y2E%2BR%2Fr8Dnd%2FoyPtKAduU3ExWoQQ23Sqfav902gjx6mh5btULwP28kqAc%2B1r9Co3s8%2F55QtPDFx%2F0xfgxr47q54iOI4NES%2FNjDWK2694C%2F2B%2F9k4JsVOg9QAu5SdAu9WL2fv%2Bg5DLrHRCyBPJIGWX%2FQxpK0leeE%2FuS8mqKEwC%2FKKfRzsjokmD4%2FX5pA8N7qnT%2BUa7%2FD4om3%2BAngPvC2oUwah4CiHCOPWUQSMW2X9p41lrvG%2FHeRUzymT1Z9X4stptA%3D%3D',
-    #     'wt3_sid': '%3B289941511384204',
-    #     'wt_fa': 'lv~1661147689986|1692251689986#cv~10|1692251689986#fv~2022-08|1691825787121#vf~1|1692251689985#',
-    #     'RT': '"z=1&dm=hepsiburada.com&si=y36kaw5otki&ss=l6xetcfo&sl=0&tt=0"',
-    #     '_hjAbsoluteSessionInProgress': '0',
-    #     '_abck': 'BCEFE56ACBAB66E9FB8D719449E08536~0~YAAQrtlraFSAB7WCAQAAUTAexQhynzxocjrjGqgvQM5iatLMmANj6sHfJUK30tqKfFBtpJ5t2qYzfPx1R0dqPTQNHcIkZkRdxCWNMgxesn19mZ5PpjwYU4negiMVPFGp9h5+x+ou7QO7bIcKv2t8HMnQ3zvgqDV7i6J/01XrVY0Iszq4hGy0DbQ/obcvM3MagOW//M8KCYwlkG+ioyon3f54Mk+kLo4sr+CIh8yyHJfgv7jhdNgvyihCqEQlYespg/zEEWpupq5FXnfFdY/ky1g+BF/fr+F3jQC8xDl9zDRlFdR1c4dSzoAqTIOTBiJ5BplEEv2n22HzarU/E8GcMs373SRPHv2QKwPfRZ4WMVHT7+VLtbGydVAevgdHmWvX73PnF8syzpGBMWJzBtrHSmZ/SXX+mRhQfn437Yc=~-1~-1~-1',
-    #     'bm_sz': 'C42504332ED82836F4ACD60681E9BB89~YAAQrtlraFWAB7WCAQAAUTAexRBgMhMHcORseX+1nzEMfVwLlvo10u6e+cbMnd2DFPCQIFmKq62HyQkv8njCq0aYuCtxjpLUTnuVpLki4wn2Sds5zGlQ3WVxQnMx41NZAUIzV2JuHYcO3jy4EtU7gE6kJ5FfIKaagNufYgOwyGMNCkFahjG0guzstORDNITDHPWEDFtoF279xPAZxmBRQGHYOYswlHW4MYNM4ARUKElUoWkPDpuOd9JdOnqq3ccQqS8q9xsa7oaf6wR3Ie3ADkFxjok80OMUcvup+7lzcswx0GTd7Qn6Ng==~3749187~4407878',
-    #     '_hjIncludedInSessionSample': '0',
-    #     '_hjSession_216130': 'eyJpZCI6Ijk5MjhlM2M3LWJlZjUtNGFlZC1iNDNmLTk1MjYwNjc5OTkzNSIsImNyZWF0ZWQiOjE2NjExNjQ0Nzg5NzAsImluU2FtcGxlIjpmYWxzZX0=',
-    #     '_hjCachedUserAttributes': 'eyJhdHRyaWJ1dGVzIjp7IlVzZXIgSWQiOiI3NmQ1NGI3MS1hODVlLTQ5MzAtYTQwYS00MTRmYWNmMDdjM2QifSwidXNlcklkIjoiMjE2MTMwIn0=',
-    #     'wt3_eid': '%3B289941511384204%7C2166041346800004667%232166116447900714268',
-    #     'wt_fa_s': 'start~1|1692700479239#',
-    #     'hbus_sessionId': 'bd11c21f-591b-4352-aa57-852840495505%7C1661166279274',
-    # }
-
     @staticmethod
     def prepare_urls():
         data = open("data/step_4_merchant_company_details_Hepsiburada.json", encoding="utf-8").read()
         data = json.loads(data)
         urls = []
-        for row in data[:10]:
+        names = []
+        for row in data[0:10]:
             urls.append(row['p_url'])
+            names.append(row['m_name'])
 
         urls = list(set(urls))
-        return urls
+        names = list(set(names))
+        return urls, names
 
     def start_requests(self):
-        urls = self.prepare_urls()
+        urls = self.prepare_urls()[0]
+        names = self.prepare_urls()[1]
         for url in urls:
             req = scrapy.Request(url, callback=self.continues,
                                  cookies=self.cookies, dont_filter=True, headers=self.headerss)
             yield req
             req.cb_kwargs["url"] = url
+            with open(f"data/names.json", "w", encoding="utf-8") as f:
+                json.dump(names, f, ensure_ascii=False)
 
-        # TODO Step 4 e ait json çıktısını okut ve içindeki ilk 10 ürünün linkine git ordan
 
     def continues(self, response, **kwargs):  # Sku ve listingId alındı
         url = kwargs["url"]
@@ -221,6 +190,7 @@ class crawl(scrapy.Spider):
         # with open(f"data/step_5_{self.name}_{self.today}.json", "w", encoding="utf-8") as f:
         #     json.dump(self.output, f, ensure_ascii=False)
         pass
+
 
 process = CrawlerProcess()
 process.crawl(crawl)

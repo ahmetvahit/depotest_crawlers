@@ -36,7 +36,8 @@ class crawl(scrapy.Spider):
         urls = self.prepare_urls()
         for url in urls:
             full_link = f"{url}?siralama=coksatan"
-            req = scrapy.Request(full_link, callback=self.continues, headers=self.headers)
+            #full_link = f"https://www.hepsiburada.com/magaza/cantip?siralama=coksatan"
+            req = scrapy.Request(full_link, callback=self.continues, dont_filter=True, headers=self.headers)
             req.cb_kwargs["url"] = url
             yield req
 
@@ -67,28 +68,22 @@ class crawl(scrapy.Spider):
             m_city = None
         try:
             name = [i.split("legalName")[1].replace('":"', '').replace('","', '') for i in infos.split("tagList")[:1]]
-            m_name = name[0].capitalize()
+            m_name = name[0].lower()
+        except:
             try:
                 name2 = [i.split("nameAndSurname")[1].replace('":"', '').replace('","', '') for i in
                          infos.split("legalName")[:1]]
                 m_name = name2[0].capitalize()
             except:
-                pass
-        except:
-            m_name = None
+                m_name = None
 
         # Her satıcıdan bi ürün sepete ekleneceği için her satıcının en çok satanlar sayfasından ilk ürün linkini kaydettik
         urls = response.xpath("//div[@class='box product  hb-placeholder']/a/@href").getall()
 
         detail_url = f"https://www.hepsiburada.com{urls[0]}"
 
-        req = scrapy.Request(detail_url, callback=self.parse, headers=self.headers)
+        req = scrapy.Request(detail_url, callback=self.parse, dont_filter=True, headers=self.headers)
 
-        # req.cb_kwargs["slug"] = slug
-        # req.cb_kwargs["kep"] = kep
-        # req.cb_kwargs["mersis"] = mersis
-        # req.cb_kwargs["m_city"] = m_city
-        # req.cb_kwargs["brand"] = brand
         yield req
         self.output.append({
             "merchant_slug": slug,
