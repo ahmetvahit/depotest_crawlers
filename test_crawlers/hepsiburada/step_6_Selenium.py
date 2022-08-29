@@ -231,7 +231,7 @@ class Hepsiburada:
 
 
 hb = Hepsiburada()
-# hb.addbasket()
+hb.addbasket()
 hb.logIn()
 hb.order_status()
 hb.contracts()
