@@ -99,7 +99,10 @@ class Hepsiburada:
 
     def addbasket(self):  # Json da kayıtlı olan sku ve listingId leri API yoluyla sepete ekleme
 
-        adds = open("data/step_5_Hepsiburada.json", encoding="utf-8").read()
+        adds = open("data/step_8_oyuncak_basket_Hepsiburada.json", encoding="utf-8").read()
+        # adds = open("data/step_8_pratikev_basket_Hepsiburada.json", encoding="utf-8").read()
+
+        # adds = open("data/step_5_Hepsiburada.json", encoding="utf-8").read()
         add = json.loads(adds)
         try:
             for d in add:
@@ -136,19 +139,21 @@ class Hepsiburada:
         # basket = "https://checkout.hepsiburada.com/sepetim"
         # self.browser.get(f"{basket}")
         self.browser.find_element(By.ID, 'continue_step_btn').click()
-        time.sleep(2)
+        time.sleep(6)
         self.browser.find_element(By.ID, 'continue_step_btn').click()
-        time.sleep(4)
+        time.sleep(6)
         self.browser.find_element(By.XPATH, '//*[@id="payment-methods"]/div/div[2]/div[1]/div[1]/div').click()
         self.browser.find_element(By.XPATH, '//*[@id="payment-money-transfer"]/div/div[1]/div[1]/div[2]/div').click()
         self.browser.find_element(By.ID, 'continue_step_btn').click()
 
     @staticmethod
     def prepare_urls():
-        data = open("data/step_4_merchant_company_details_Hepsiburada.json", encoding="utf-8").read()
+        # data = open("data/step_4_merchant_company_details_Hepsiburada.json", encoding="utf-8").read()
+        data = open("data/step_7_category_oyuncak_company_detail.json", encoding="utf-8").read()
+        # data = open("data/step_7_category_pratikev_company_detail.json", encoding="utf-8").read()
         data = json.loads(data)
         names = []
-        for row in data[:10]:
+        for row in data:
             names.append(row['m_name'])
 
         names = list(set(names))
@@ -163,13 +168,22 @@ class Hepsiburada:
 
         # TODO MATCHLEME KISMI YAPILACAK------<<<<<<<<
         # Eklenen 10 ürünün satıcılarının name bilgisine göre matchleme
-        # response3 = self.browser.find_element(By.XPATH,"//div[@class='contract_checkbox_text_Q601P']/a").click()
-        # time.sleep(5)
-        # res=self.browser.find_elements(By.XPATH, "//*[@id='Contracts_931e9085-df69-4d0d-0ffc-aa231302f527']/div/div/div/table[1]/tbody/tr[2]/td/p[1]/strong[1]/text()")
 
         js = json.loads(response2.text)["result"]
-        titles = js.split(" Ünvanı")
-        del titles[0]
+
+        # # Adres bilgisi
+        # adres = js.split(" Adresi:")
+        # del adres[0]
+        #
+        # adress = []
+        # for a in adres:
+        #     adr = a.split("<br/>")[0].replace("<strong>", "").strip()
+        #     adress.append(adr)
+        # # Tekrarlanmış adreslerin editlenmesi
+        # adress_edit = []
+        # for ad in adress:
+        #     if ad not in adress_edit:
+        #         adress_edit.append(ad)
 
         # Telefon bilgisini alma
         phones = js.split(" Telefon: </strong>")
@@ -186,6 +200,8 @@ class Hepsiburada:
                 mobiles_edit.append(m)
 
         # Ünvan bilgisini alma
+        titles = js.split(" Ünvanı")
+        del titles[0]
         title = []
         for i in titles:
             merc = i.split("<br/>")[0].replace(":", "").strip().lower()
@@ -207,14 +223,11 @@ class Hepsiburada:
         with open("data/matching_sellers.json", "w", encoding="utf-8") as f:
             json.dump(merchant_items, f, ensure_ascii=False)
 
-        try:
-            jss = json.loads(response1.text)["result"]
-            mobile = [i.split("Telefon")[1].replace(":", "") for i in jss.split("Fax")[:1]][0]
-            m_phone = mobile.strip().split("\n")[0]
-        except:
-            m_phone = None
-            # js = json.loads(response2.text)["result"]
+        # TODO Alınmış olan telefon numara listesinin,
+        # Todo step_7_category_oyuncak_company_detail içerisindeki phone kısmına aktarılması gerekli
 
+
+        print('hi')
         # self.output.append({
         #     "merchant_slug": None,
         #     "email": None,
@@ -231,9 +244,8 @@ class Hepsiburada:
 
 
 hb = Hepsiburada()
-hb.addbasket()
+# hb.addbasket()
 hb.logIn()
 hb.order_status()
 hb.contracts()
-# hb.retry()
 hb.close()
