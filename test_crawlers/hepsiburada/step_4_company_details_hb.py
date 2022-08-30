@@ -36,7 +36,7 @@ class crawl(scrapy.Spider):
         urls = self.prepare_urls()
         for url in urls:
             full_link = f"{url}?siralama=coksatan"
-            #full_link = f"https://www.hepsiburada.com/magaza/cantip?siralama=coksatan"
+            # full_link = f"https://www.hepsiburada.com/magaza/cantip?siralama=coksatan"
             req = scrapy.Request(full_link, callback=self.continues, dont_filter=True, headers=self.headers)
             req.cb_kwargs["url"] = url
             yield req
@@ -46,6 +46,19 @@ class crawl(scrapy.Spider):
 
         slug = url.split("/")[4]
         infos = response.xpath("//div[@class='merchant-information']/div/div/script/text()").get().strip()
+        products = response.xpath("/html/body/script[6]/text()").get().strip()
+        try:
+            cats = [i.split("product_categories")[1].replace('":[', '').replace(']', '') for i in
+                    products.split("shipping_type")[:1]][0]
+            cat = cats.replace('"', '').split(',')
+            del cat[-1]
+            # categorys=[]
+            # for c in cat:
+            #     c.replace("'[", "").replace("]'", "").lower()
+            #     categorys.append(c)
+
+        except:
+            cat = None
         try:
             kep2 = [i.split("kep")[1].replace('":"', '').replace('","', '') for i in infos.split("mersisNumber")[:1]][0]
             kep = kep2 + 'kep.tr'
@@ -58,8 +71,6 @@ class crawl(scrapy.Spider):
                     0]
         except:
             mersis = None
-
-        phone = ''
 
         try:
             city = [i.split("city")[1].replace('":"', '').replace('","', '') for i in infos.split("profession")[:1]]
@@ -77,33 +88,31 @@ class crawl(scrapy.Spider):
             except:
                 m_name = None
 
+        try:
+            merchant_score = float(response.xpath("//div[@data-testid='rating']/text()").get().replace(",", "."))
+        except:
+            merchant_score = None
+
         # Her satıcıdan bi ürün sepete ekleneceği için her satıcının en çok satanlar sayfasından ilk ürün linkini kaydettik
         urls = response.xpath("//div[@class='box product  hb-placeholder']/a/@href").getall()
 
         detail_url = f"https://www.hepsiburada.com{urls[0]}"
 
-        req = scrapy.Request(detail_url, callback=self.parse, dont_filter=True, headers=self.headers)
-
-        yield req
         self.output.append({
             "merchant_slug": slug,
+            "merchant_score": merchant_score,
             "m_name": m_name,
             "email": kep,
             "mersis_no": mersis,
             "phone": 'none',
             "city": m_city,
+            "category": cat,
             "p_url": detail_url
         })
 
-    def parse(self, response, **kwargs):  # TODO Ürün sayfasındasın!!
-        pass
-
     def close(self, spider, reason):
-        with open(f"data/step_4_merchant_company_details_{self.name}.json", "w", encoding="utf-8") as f:
+        with open(f"data/step_4_merchant_company_detailsTESTson_{self.name}.json", "w", encoding="utf-8") as f:
             json.dump(self.output, f, ensure_ascii=False)
-
-            # df = pd.read_json(json.dumps(self.output, ensure_ascii=False), encoding="utf-8")
-            # df.to_excel("sample.xlsx",encoding="utf-8", index=False)
 
 
 process = CrawlerProcess()
