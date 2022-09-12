@@ -9,7 +9,7 @@ api.verbose = True
 auth_token = "None"
 
 
-def get_product_resarch(category_id: str) -> dict:
+def get_product_resarch(category_id: str) -> dict:  # Ürün Araştırma
     data = {
         'is_favorite': 0,
         'page': 0,
@@ -63,7 +63,7 @@ def get_retail_arbitrage_products(cat_id: str, country: str = "usa", amazon_coun
     return api._request(f"{BASE_URL}/v1/GetTYRetailArbitrageProducts", "POST", data=data)
 
 
-def get_favorite_products(category_id: str, platfrom_id: str = "TY") -> dict:
+def get_favorite_products(category_id: str, platfrom_id: str = "TY") -> dict: # Piyasa Analizi
     data = {
         'siteId': platfrom_id,
         'categoryId': category_id,
@@ -72,7 +72,7 @@ def get_favorite_products(category_id: str, platfrom_id: str = "TY") -> dict:
     return api._request(f"{BASE_URL}/v1/GetTop100Analysis", "POST", data=data)
 
 
-def get_target_audience(category_id: str) -> dict:
+def get_target_audience(category_id: str) -> dict: # Hedef Kitle Analizi
     data = {
         'categoryid': category_id,
         'Token': auth_token,
