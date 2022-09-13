@@ -6,7 +6,7 @@ BASE_URL = "https://api.nesatilir.com/api"
 
 api = APIRequestHandler()
 api.verbose = True
-auth_token = "Vs25HMqmukKsLU02AI5ycw56519"
+auth_token = "None"
 
 
 def get_product_resarch(category_id: str) -> dict:  # Ürün Araştırma
