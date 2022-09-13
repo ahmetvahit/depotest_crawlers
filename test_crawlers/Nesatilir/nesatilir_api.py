@@ -8,7 +8,6 @@ api = APIRequestHandler()
 api.verbose = True
 auth_token = "None"
 
-
 def get_product_resarch(category_id: str) -> dict:  # Ürün Araştırma
     data = {
         'is_favorite': 0,
