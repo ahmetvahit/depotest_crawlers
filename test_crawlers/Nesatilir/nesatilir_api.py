@@ -82,7 +82,7 @@ def get_target_audience(category_id: str) -> dict: # Hedef Kitle Analizi
 
 def auto_pricing(UserStoreApiId: str) -> dict:  # Otomatik Fiyatlandırma
     data = {
-        'Token': 'ygaFnIDL1E2Ci0sxG0JGxw56519',
+        'Token': auth_token,
         'UserStoreApiId': UserStoreApiId,
     }
     return api._request(f"{BASE_URL}/v1/TYGetAccountInfo", "POST", data=data)
