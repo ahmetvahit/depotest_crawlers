@@ -6,7 +6,8 @@ BASE_URL = "https://api.nesatilir.com/api"
 
 api = APIRequestHandler()
 api.verbose = True
-auth_token = "None"
+auth_token = "Vs25HMqmukKsLU02AI5ycw56519"
+
 
 def get_product_resarch(category_id: str) -> dict:  # Ürün Araştırma
     data = {
@@ -62,7 +63,7 @@ def get_retail_arbitrage_products(cat_id: str, country: str = "usa", amazon_coun
     return api._request(f"{BASE_URL}/v1/GetTYRetailArbitrageProducts", "POST", data=data)
 
 
-def get_favorite_products(category_id: str, platfrom_id: str = "TY") -> dict: # Piyasa Analizi
+def get_favorite_products(category_id: str, platfrom_id: str = "TY") -> dict:  # Piyasa Analizi
     data = {
         'siteId': platfrom_id,
         'categoryId': category_id,
@@ -71,7 +72,7 @@ def get_favorite_products(category_id: str, platfrom_id: str = "TY") -> dict: # 
     return api._request(f"{BASE_URL}/v1/GetTop100Analysis", "POST", data=data)
 
 
-def get_target_audience(category_id: str) -> dict: # Hedef Kitle Analizi
+def get_target_audience(category_id: str) -> dict:  # Hedef Kitle Analizi
     data = {
         'categoryid': category_id,
         'Token': auth_token,
@@ -113,7 +114,7 @@ def buybox_add_product(product_id: str,  # Takip Araçları>Buybox Takibi (Ürü
                        platfrom_id: str = "TY") -> dict:
     data = {
         'img': '',
-        'name': 'Proline Bebek Pudrası Kokulu Ince Tane Topaklanan Kedi Kumu 10 Lt X 2 Adet',
+        'name': '',
         'url': 'https://www.trendyol.com/skechers/bobs-bamina-star-strikez-kadin-beyaz-spor-ayakkabi-117355-ofwt-p-260194859',
         'market': platfrom_id,
         'productid': product_id,
